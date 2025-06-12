@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda de contatos</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <header>
+        <h1>📒 Agenda de Contatos</h1>
+    </header>
+    <main>
+        <!--formulario-->
+        <section class="form-container">
+            <h2>Adicionar Contatos</h2>
+            <form id="form-contato">
+                <input type="text" id="nome" placeholder="Nome" required/>
+                <input Type="tel" id="telefone" placeholder="Telefone" required/>
+                <input type="email" id="email" placeholder="Email" required/>
+                <input type="text" id="endereco" placeholder="Endereço" required/>
+                <button type="submit">Adicionar</button>
+            </form>
+
+            <!-- Campo de busca-->
+             <section class="busca-container">
+                <input type="text" id="busca" placehoder="Busca por nome ou email... "/>
+             </section>
+
+             <!-- Lista de contatos -->
+              <section class="lista-container">
+                <h2>Contatos</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Telefone</th>
+                            <th>Email</th>
+                            <th>Endereço</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-contatos">
+                        <!-- Contatos aparecem aqui -->
+                    </tbody>
+                </table>
+              </section>
+        </section>
+    </main>
+</body>
+</html>
