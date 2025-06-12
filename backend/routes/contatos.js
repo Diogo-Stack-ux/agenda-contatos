@@ -7,10 +7,28 @@ const {
   updateContato,
   deleteContato
 } = require('../models/contatosModel');
+const pool = require('../db'); // Certifique-se de que isso existe e está configurado
 
+// GET com ou sem filtro de busca
 router.get('/', async (req, res) => {
-  const contatos = await getContatos();
-  res.json(contatos);
+  const { q } = req.query;
+
+  try {
+    let result;
+    if (q) {
+      result = await pool.query(
+        `SELECT * FROM contatos WHERE 
+         nome ILIKE $1 OR email ILIKE $1 OR telefone ILIKE $1`,
+        [`%${q}%`]
+      );
+    } else {
+      result = await pool.query('SELECT * FROM contatos');
+    }
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ erro: 'Erro ao buscar contatos' });
+  }
 });
 
 router.get('/:id', async (req, res) => {

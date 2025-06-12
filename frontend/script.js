@@ -34,27 +34,28 @@ document.addEventListener('DOMContentLoaded', () => {
   buscaInput.addEventListener('input', () => carregarContatos(buscaInput.value));
 
   async function carregarContatos(filtro = '') {
-    const res = await fetch('http://localhost:3000/contatos');
-    const contatos = await res.json();
+    const resposta = await fetch(`http://localhost:3000/contatos?q=${encodeURIComponent(filtro)}`);
+    const contatos = await resposta.json();
 
+    const tabela = document.getElementById('tabela-contatos');
     tabela.innerHTML = '';
-    contatos
-      .filter(c => c.nome.toLowerCase().includes(filtro.toLowerCase()))
-      .forEach(c => {
+
+    contatos.forEach(contato => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td>${c.nome}</td>
-          <td>${c.telefone}</td>
-          <td>${c.email}</td>
-          <td>${c.endereco || ''}</td>
-          <td>
-            <button class="editar" onclick="editarContato(${c.id})">Editar</button>
-            <button class="excluir" onclick="excluirContato(${c.id})">Excluir</button>
-          </td>
+            <td>${contato.nome}</td>
+            <td>${contato.telefone}</td>
+            <td>${contato.email}</td>
+            <td>${contato.endereco}</td>
+            <td>
+                <button onclick="editarContato(${contato.id})">✏️</button>
+                <button onclick="excluirContato(${contato.id})">🗑️</button>
+            </td>
         `;
         tabela.appendChild(tr);
-      });
-  }
+    });
+}
+
 
   window.editarContato = async (id) => {
     const res = await fetch(`http://localhost:3000/contatos/${id}`);
